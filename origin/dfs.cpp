@@ -243,8 +243,8 @@ void create_adjacency_list()
       adjAddress[i] = 0;
    } // initialize adjAddress to zeroes
    for (int i = 0; i < m; i++)
-   { // for every edge
-     // note that the first element is skipped in the assignment for loop, so the first element is always 0
+   {                                      // for every edge
+                                          // note that the first element is skipped in the assignment for loop, so the first element is always 0
       adjAddress[edges[2 * i] + 1]++;     // references each source vertex 's' in edge list and increments adjAddress[s] by 1
       adjAddress[edges[2 * i + 1] + 1]++; // references each target vertex 't' in edge list and increments adjAddress[t] by 1
    }                                      // this for loop records the degree of each vertex by reading how many times it appears as a target and as a source of an edge in the edge list.
@@ -267,8 +267,8 @@ void create_adjacency_list()
    adj[adjAddress[v]] gives us the index in adj to access the beginning of the adjacency list of v.
    */
    for (int i = 0; i < m; i++)
-   { // edges array has 2 ints per edge, each block represents 1 edge		00'00'00'00'00'00... for m blocks
-     // clearly these 2 ints represent the number of the source vertex and the number of the target vertex of each edge
+   {                            // edges array has 2 ints per edge, each block represents 1 edge		00'00'00'00'00'00... for m blocks
+                                // clearly these 2 ints represent the number of the source vertex and the number of the target vertex of each edge
       int x = edges[2 * i];     // read an edge into the variables x and y
       int y = edges[2 * i + 1]; //(x, y) is the edge we are referencing
       adj[nextOut[x]++] = y;    // access the adjacency list offset for vertex x and set the first adjacent vertex to y

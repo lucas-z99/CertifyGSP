@@ -13,13 +13,13 @@ using std::vector;
 
 
 struct Graph{
-    int vertex_count; //equal to |V| size of graph
-    int edge_count; //equal to |E| number of edges in the graph
+    int vertexCount; //equal to |V| size of graph
+    int edgeCount; //equal to |E| number of edges in the graph
     vector<int> parent; //vector containing data so that parent[3] gives the number of the vertex that is parent of 3 in the dfs tree
     vector<int> nDescendants; //vector containing number of descendants of a vertex including itself as a descendant.
     vector<int> dfsRank; //holds the number that represents in the order that the dfs accessed each vertex in the graph in.
     vector<int> adj; //adjList[0] contains the vector of Edges that are connected to vertex 0. Edge contains target vertex and tree edge boolean.
-    vector<int> adjAddress;
+    vector<int> adjAdd;
     vector<pair<int, int>> ear; //holds ear decomposition data. pair.first must be source, pair.second must be sink
 };
 
@@ -38,22 +38,22 @@ int main(int argc, char* argv[]) {
     Graph gD; //gD stands for Graph Data
     
     s::ifstream is(argv[1]);
-    is >> gD.vertex_count >> gD.edge_count;
+    is >> gD.vertexCount >> gD.edgeCount;
     
-    gD.dfsRank = s::vector<int>(gD.vertex_count, -1);
+    gD.dfsRank = s::vector<int>(gD.vertexCount, -1);
     gD.dfsRank.shrink_to_fit();
-    gD.parent = s::vector<int>(gD.vertex_count, -1);
+    gD.parent = s::vector<int>(gD.vertexCount, -1);
     gD.parent.shrink_to_fit();
-    gD.nDescendants = s::vector<int>(gD.vertex_count, 1);
+    gD.nDescendants = s::vector<int>(gD.vertexCount, 1);
     gD.nDescendants.shrink_to_fit();
-    gD.ear = s::vector<pair<int, int>>(gD.vertex_count, s::pair<int, int>(-1, -1));
+    gD.ear = s::vector<pair<int, int>>(gD.vertexCount, s::pair<int, int>(-1, -1));
     gD.ear.shrink_to_fit();
-    gD.adj.reserve(gD.edge_count * 2);
-    gD.adjAddress.reserve(gD.vertex_count+1);
+    gD.adj.reserve(gD.edgeCount * 2);
+    gD.adjAdd.reserve(gD.vertexCount+1);
     
     vector<pair<int, int>> edges;
-    create_edges(gD.vertex_count, gD.edge_count, edges, is);
-    create_adjacency_list(gD.vertex_count, edges, gD.adj, gD.adjAddress);
+    create_edges(gD.vertexCount, gD.edgeCount, edges, is);
+    create_adjacency_list(gD.vertexCount, edges, gD.adj, gD.adjAdd);
     
     //measure the start time with a barrier that prevents the compiler from reordering
     std::atomic_thread_fence(std::memory_order_seq_cst);
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 void genCS(int const & starting_vertex, Graph & gD) {
     //s::stack<int, std::vector<int>> the_stack;
     std::vector<int> the_stack;
-    the_stack.reserve(gD.vertex_count);
+    the_stack.reserve(gD.vertexCount);
     the_stack.push_back(starting_vertex);
     int dfsNumber = 1;
     gD.dfsRank[starting_vertex] = dfsNumber++;
@@ -102,7 +102,7 @@ void genCS(int const & starting_vertex, Graph & gD) {
     while (!the_stack.empty()) {
         int topOfStack = the_stack.back();
         bool descend = false;
-        for (int i = gD.adjAddress[topOfStack]; i < gD.adjAddress[topOfStack+1]; i++) {
+        for (int i = gD.adjAdd[topOfStack]; i < gD.adjAdd[topOfStack+1]; i++) {
             int w = gD.adj[i];
             if (gD.dfsRank[w] == -1) {
                 gD.parent[w] = topOfStack;

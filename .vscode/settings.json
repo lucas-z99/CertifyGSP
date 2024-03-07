@@ -86,6 +86,12 @@
         "ranges": "cpp",
         "span": "cpp",
         "cstdarg": "cpp",
+        "condition_variable": "cpp",
+        "semaphore": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp",
+        "future": "cpp",
+        "csignal": "cpp",
         "fstream": "cpp"
     }
 }
