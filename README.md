@@ -1,4 +1,4 @@
-C++ project code for a class.
+C++ project code for a class
 
 ### Main article
 
